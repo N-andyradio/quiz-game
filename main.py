@@ -91,34 +91,57 @@ def read_int(prompt, min_value, max_value):
         return number
 
 
-def show_menu():
-    print("=" * 40)
-    print("        🎯 클래식 기타 퀴즈 게임 🎯")
-    print("=" * 40)
-    print("1. 퀴즈 풀기")
-    print("2. 퀴즈 추가")
-    print("3. 퀴즈 목록")
-    print("4. 점수 확인")
-    print("5. 종료")
-    print("=" * 40)
+class QuizGame:
+    """퀴즈 게임 전체를 관리하는 클래스."""
+
+    def __init__(self):
+        self.quizzes = create_default_quizzes()
+        self.best_score = None  # 아직 퀴즈를 풀지 않았으면 None
+
+    def show_menu(self):
+        print("=" * 40)
+        print("        🎯 클래식 기타 퀴즈 게임 🎯")
+        print("=" * 40)
+        print("1. 퀴즈 풀기")
+        print("2. 퀴즈 추가")
+        print("3. 퀴즈 목록")
+        print("4. 점수 확인")
+        print("5. 종료")
+        print("=" * 40)
+
+    def play(self):
+        print("퀴즈 풀기는 준비 중입니다.")
+
+    def add_quiz(self):
+        print("퀴즈 추가는 준비 중입니다.")
+
+    def list_quizzes(self):
+        print("퀴즈 목록은 준비 중입니다.")
+
+    def show_score(self):
+        print("점수 확인은 준비 중입니다.")
+
+    def run(self):
+        while True:
+            self.show_menu()
+            choice = read_int("선택: ", 1, 5)
+
+            if choice == 1:
+                self.play()
+            elif choice == 2:
+                self.add_quiz()
+            elif choice == 3:
+                self.list_quizzes()
+            elif choice == 4:
+                self.show_score()
+            elif choice == 5:
+                print("게임을 종료합니다. 안녕히 가세요!")
+                break
 
 
 def main():
-    while True:
-        show_menu()
-        choice = read_int("선택: ", 1, 5)
-
-        if choice == 1:
-            print("퀴즈 풀기는 준비 중입니다.")
-        elif choice == 2:
-            print("퀴즈 추가는 준비 중입니다.")
-        elif choice == 3:
-            print("퀴즈 목록은 준비 중입니다.")
-        elif choice == 4:
-            print("점수 확인은 준비 중입니다.")
-        elif choice == 5:
-            print("게임을 종료합니다. 안녕히 가세요!")
-            break
+    game = QuizGame()
+    game.run()
 
 
 if __name__ == "__main__":
