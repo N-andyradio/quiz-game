@@ -36,6 +36,39 @@ class Quiz:
     def from_dict(cls, data):
         """저장된 딕셔너리로부터 Quiz 객체를 만든다."""
         return cls(data["question"], data["choices"], data["answer"])
+
+
+def create_default_quizzes():
+    """처음 실행할 때 쓰는 기본 퀴즈 5개를 만들어 반환한다."""
+    return [
+        Quiz(
+            "클래식 기타의 표준 튜닝을 6번줄(가장 굵은 줄)부터 1번줄 순서로 나열한 것은?",
+            ["E-B-G-D-A-E", "E-A-D-G-B-E", "D-A-D-G-B-E", "D-G-C-F-A-D"],
+            2,
+        ),
+        Quiz(
+            "일반적인 클래식 기타의 줄은 모두 몇 개일까요?",
+            ["4개", "5개", "6개", "12개"],
+            3,
+        ),
+        Quiz(
+            "클래식 기타의 대표곡 '알함브라 궁전의 추억'을 작곡한 사람은?",
+            ["프란시스코 타레가", "안드레스 세고비아", "페르난도 소르", "이삭 알베니스"],
+            1,
+        ),
+        Quiz(
+            "클래식 기타 줄의 기본 재질은 무엇일까요?",
+            ["철(스틸)", "가죽", "실크", "나일론"],
+            4,
+        ),
+        Quiz(
+            "클래식 기타 오른손 지법에서 'a'로 표기하는 손가락은?",
+            ["엄지", "검지", "중지", "약지"],
+            4,
+        ),
+    ]
+
+
 def read_int(prompt, min_value, max_value):
     """min_value~max_value 사이의 정수를 입력받아 반환한다."""
     while True:
