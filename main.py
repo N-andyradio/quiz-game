@@ -1,3 +1,41 @@
+class Quiz:
+    """퀴즈 한 문제를 나타내는 클래스."""
+
+    def __init__(self, question, choices, answer):
+        if len(choices) != 4:
+            raise ValueError("선택지는 4개여야 합니다.")
+        if answer not in (1, 2, 3, 4):
+            raise ValueError("정답은 1~4 중 하나여야 합니다.")
+        self.question = question
+        self.choices = choices
+        self.answer = answer
+
+    def display(self, number=None):
+        """문제와 선택지를 화면에 출력한다."""
+        if number is not None:
+            print(f"[문제 {number}]")
+        print(self.question)
+        print()
+        for i, choice in enumerate(self.choices, start=1):
+            print(f"{i}. {choice}")
+        print()
+
+    def check(self, user_answer):
+        """사용자가 입력한 번호가 정답이면 True를 반환한다."""
+        return user_answer == self.answer
+
+    def to_dict(self):
+        """JSON으로 저장하기 위해 딕셔너리로 변환한다."""
+        return {
+            "question": self.question,
+            "choices": self.choices,
+            "answer": self.answer,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        """저장된 딕셔너리로부터 Quiz 객체를 만든다."""
+        return cls(data["question"], data["choices"], data["answer"])
 def read_int(prompt, min_value, max_value):
     """min_value~max_value 사이의 정수를 입력받아 반환한다."""
     while True:
