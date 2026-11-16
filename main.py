@@ -97,6 +97,15 @@ def read_int(prompt, min_value, max_value):
         return number
 
 
+def read_text(prompt):
+    """비어 있지 않은 문자열을 입력받아 반환한다."""
+    while True:
+        text = input(prompt).strip()
+        if text:
+            return text
+        print("⚠️ 입력이 비어 있습니다. 내용을 입력하세요.")
+
+
 class QuizGame:
     """퀴즈 게임 전체를 관리하는 클래스."""
 
@@ -184,7 +193,20 @@ class QuizGame:
         print("=" * 40)
 
     def add_quiz(self):
-        print("퀴즈 추가는 준비 중입니다.")
+        """새 퀴즈를 입력받아 목록에 추가하고 저장한다."""
+        print("\n📌 새로운 퀴즈를 추가합니다.\n")
+        question = read_text("문제를 입력하세요: ")
+
+        choices = []
+        for i in range(1, 5):
+            choice = read_text(f"선택지 {i}: ")
+            choices.append(choice)
+
+        answer = read_int("정답 번호 (1-4): ", 1, 4)
+
+        self.quizzes.append(Quiz(question, choices, answer))
+        self.save_state()
+        print("\n✅ 퀴즈가 추가되었습니다!\n")
 
     def list_quizzes(self):
         print("퀴즈 목록은 준비 중입니다.")
