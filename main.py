@@ -166,6 +166,13 @@ class QuizGame:
         print("5. 종료")
         print("=" * 40)
 
+    def update_best_score(self, score):
+        """새 점수가 최고 점수보다 높으면 갱신하고 저장한다."""
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            self.save_state()
+            print("🎉 새로운 최고 점수입니다!")
+
     def play(self):
         """저장된 퀴즈를 순서대로 출제하고 결과를 보여 준다."""
         if not self.quizzes:
@@ -190,6 +197,7 @@ class QuizGame:
         score = correct * 100 // total
         print("=" * 40)
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        self.update_best_score(score)
         print("=" * 40)
 
     def add_quiz(self):
@@ -221,7 +229,12 @@ class QuizGame:
         print("-" * 40)
 
     def show_score(self):
-        print("점수 확인은 준비 중입니다.")
+        """최고 점수를 보여 준다."""
+        if self.best_score is None:
+            print("📭 아직 퀴즈를 푼 기록이 없습니다. 먼저 퀴즈를 풀어 보세요!")
+            return
+
+        print(f"\n🏆 최고 점수: {self.best_score}점\n")
 
     def run(self):
         while True:
