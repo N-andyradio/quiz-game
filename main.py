@@ -257,8 +257,11 @@ class QuizGame:
 
 def main():
     game = QuizGame()
-    game.run()
-
+    try:
+        game.run()
+    except (KeyboardInterrupt, EOFError):
+        print("\n\n⚠️ 프로그램이 중단되었습니다. 데이터를 저장하고 종료합니다.")
+        game.save_state()
 
 if __name__ == "__main__":
     main()
