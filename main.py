@@ -238,7 +238,7 @@ class QuizGame:
                 self.show_score()
             elif choice == 5:
                 self.save_state()
-                print("게임을 종료합니다. 안녕히 가세요!")
+                print("💾 저장 완료! 게임을 종료합니다. 안녕히 가세요!")
                 break
 
 
