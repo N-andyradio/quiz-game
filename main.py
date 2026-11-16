@@ -1,3 +1,9 @@
+import json
+from pathlib import Path
+
+STATE_FILE = Path(__file__).parent / "state.json"
+
+
 class Quiz:
     """퀴즈 한 문제를 나타내는 클래스."""
 
@@ -95,8 +101,50 @@ class QuizGame:
     """퀴즈 게임 전체를 관리하는 클래스."""
 
     def __init__(self):
-        self.quizzes = create_default_quizzes()
+        self.quizzes = []
         self.best_score = None  # 아직 퀴즈를 풀지 않았으면 None
+        self.load_state()
+
+    def reset_to_default(self):
+        """기본 퀴즈와 빈 점수로 초기화한다."""
+        self.quizzes = create_default_quizzes()
+        self.best_score = None
+
+    def load_state(self):
+        """state.json에서 퀴즈와 최고 점수를 불러온다."""
+        if not STATE_FILE.exists():
+            print("📂 저장된 데이터가 없어 기본 퀴즈로 시작합니다.")
+            self.reset_to_default()
+            self.save_state()
+            return
+
+        try:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            self.quizzes = [Quiz.from_dict(item) for item in data["quizzes"]]
+            self.best_score = data.get("best_score")
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+            print("⚠️ 데이터 파일이 손상되어 기본 퀴즈로 복구합니다.")
+            self.reset_to_default()
+            self.save_state()
+        except OSError:
+            print("⚠️ 데이터 파일을 읽을 수 없어 기본 퀴즈로 시작합니다.")
+            self.reset_to_default()
+        else:
+            score_text = "없음" if self.best_score is None else f"{self.best_score}점"
+            print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고 점수 {score_text})")
+
+    def save_state(self):
+        """퀴즈와 최고 점수를 state.json에 저장한다."""
+        data = {
+            "quizzes": [quiz.to_dict() for quiz in self.quizzes],
+            "best_score": self.best_score,
+        }
+        try:
+            with open(STATE_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+        except OSError:
+            print("⚠️ 데이터를 저장하지 못했습니다.")
 
     def show_menu(self):
         print("=" * 40)
@@ -158,6 +206,7 @@ class QuizGame:
             elif choice == 4:
                 self.show_score()
             elif choice == 5:
+                self.save_state()
                 print("게임을 종료합니다. 안녕히 가세요!")
                 break
 
