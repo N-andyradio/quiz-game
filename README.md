@@ -179,4 +179,12 @@ quiz-game/
 | 점수 확인 |
 |---|
 | ![점수 확인](docs/screenshots/score.png) |
-> �� ���� clone/pull �ǽ��� ���� ������ ����ҿ��� �߰��߽��ϴ�.
+
+---
+
+## 8. Git clone / pull 실습
+
+미션 저장소를 별도 폴더(`quiz-game-clone`)에 clone한 뒤, README를 수정해 commit → push 했습니다.
+이후 기존 작업 폴더(`quiz-game`)에서 pull로 변경사항을 받아 반영을 확인했습니다.
+
+![clone 및 pull 실습](docs/screenshots/clone_pull.png)
